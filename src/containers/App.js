@@ -1,26 +1,56 @@
 import React, {
-  AppRegistry,
+  Navigator,
   Component,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 
-class AppContainer extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native + Redux!
-        </Text>
-        <Text style={styles.instructions}>
-          Immutable to be added to reducers
-        </Text>
-        <Text style={styles.instructions}>
-          Store to be connected to UI,{'\n'}
-          And a nativation skeleton to be constructed!
-        </Text>
-      </View>
+import ItemList from './itemList'
+
+// Top level navigator.
+// Navigator route should have:
+// - id: unique scene id
+// - name: scene's display name, to be displayed on navigation bar
+// - sceneConfig: configureation of how to put the scene on top
+// - content: the content to be render in this scene
+// - params: customized params you would like to pass to the scene
+
+class App extends Component {
+
+  renderScene(route, nav) {
+    if (route.content) {
+      let ContentPage = route.content
+      return <ContentPage {...route.params} navigator={nav} />
+    }
+    else {
+      // render a placeholder as default
+      return (
+        <View>
+          <Text style={styles.welcome}>
+            A placeholder page
+          </Text>
+          <Text style={styles.instructions}>
+            The scene {route.id} has no content
+          </Text>
+        </View>
+      )
+    }
+  }
+
+  render(){
+    return(
+      <Navigator
+       initialRoute={ItemList}
+       renderScene={this.renderScene.bind(this)}
+       configureScene={ (route) => {
+         if (route.sceneConfig) {
+           return route.sceneConfig;
+         }
+         return Navigator.SceneConfigs.FloatFromRight;
+       }}
+       sceneStyle={styles.container}
+      />
     );
   }
 }
@@ -44,4 +74,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = AppContainer
+module.exports = App

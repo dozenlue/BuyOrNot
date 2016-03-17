@@ -1,7 +1,8 @@
 // Actions defined in ../actions
 const {
   ADD_ITEM,
-  REMOVE_ITEM
+  REMOVE_ITEM,
+  FETCH_ITEMS,
 } = require('../actions/items')
 
 // initial state: an empty list
@@ -10,6 +11,7 @@ const initialState = {
 }
 
 module.exports = function items(state = initialState, action) {
+  console.log('reducer get called');
   let list
 
   switch (action.type) {
@@ -25,6 +27,14 @@ module.exports = function items(state = initialState, action) {
     list.splice(index, 1)
     return {
      itemList: list
+    }
+  case FETCH_ITEMS:
+    // dummy code
+    console.log('reducer called: fetchItems');
+    list = state.itemList.concat({id: '1', name: 'aaa'});
+    list.push({id: '2', name: 'bbb'})
+    return {
+      itemList: list
     }
   default:
     // unknown action, nothing to do
