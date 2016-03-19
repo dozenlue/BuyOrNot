@@ -2,7 +2,8 @@ import React, {
   Component,
   StyleSheet,
   Text,
-  View
+  View,
+  ListView
 } from 'react-native';
 
 import {bindActionCreators} from 'redux';
@@ -26,23 +27,46 @@ const mapDispatchToProps = (dispatch) => {
 
 class ItemList extends Component {
   constructor(props) {
-    super(props);
-  }
+		super(props);
+		var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+		this.state = {
+			ds: ds.cloneWithRows(this.props.items)
+		}
+	}
 
   componentDidMount() {
-    this.props.fetchItems()
+    this.props.fetchItems();
   }
+
+  // This will be called when property was changed.
+  // As we mapped 'this.props.items' to store's 'itemList', property will be
+  // changed when 'itemList' in store updated.
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.items !== this.props.items) {
+			this.setState({
+				ds: this.state.ds.cloneWithRows(nextProps.items)
+			})
+		}
+	}
 
   render() {
     return (
-      <View>
-        <Text style={styles.instructions}>
-          Here are {this.props.items.length} items
-        </Text>
-      </View>
+      <ListView
+        dataSource={this.state.ds}
+        renderRow={this.renderRow}
+      />
     )
   }
 
+  renderRow(item) {
+    console.debug('renderRow called with item: ' + item);
+    return (
+      <View>
+        <Text style={styles.instructions}>{item.id}</Text>
+        <Text style={styles.instructions}>{item.name}</Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
