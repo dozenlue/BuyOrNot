@@ -12,7 +12,7 @@ import * as itemActions from '../actions/items';
 
 const mapReduxStoreToProps = (reduxStore) => {
   console.log('mapReduxStoreToProps called');
-  console.debug(reduxStore);
+  // console.debug(reduxStore);
   return {
     // Why cannot use store.get here?
     items: reduxStore.items.itemList
@@ -59,7 +59,7 @@ class ItemList extends Component {
   }
 
   renderRow(item) {
-    console.debug('renderRow called with item: ' + item);
+    // console.debug('renderRow called with item: ' + item);
     return (
       <View>
         <Text style={styles.instructions}>{item.id}</Text>
@@ -79,5 +79,6 @@ const styles = StyleSheet.create({
 
 module.exports = {
   id: 'itemList',
+  name: 'Items',
   content: connect(mapReduxStoreToProps, mapDispatchToProps)(ItemList)
 }
