@@ -3,10 +3,51 @@ import React, {
   Component,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 
 import ItemList from './itemList'
+import LoginPage from './login'
+
+var NavigationBarRouteMapper = {
+
+  LeftButton: function(route, navigator, index, navState) {
+    return (
+      <TouchableOpacity
+        onPress={() => navigator.pop()}
+        style={styles.navBarLeftButton}>
+        <Text style={[styles.navBarText, styles.navBarButtonText]}>
+          Prev
+        </Text>
+      </TouchableOpacity>
+    );
+  },
+
+  RightButton: function(route, navigator, index, navState) {
+    return (
+      <TouchableOpacity
+        onPress={() => navigator.push(ItemList)}
+        style={styles.navBarRightButton}>
+        <Text style={[styles.navBarText, styles.navBarButtonText]}>
+          Next
+        </Text>
+      </TouchableOpacity>
+    );
+  },
+
+  Title: function(route, navigator, index, navState) {
+    return (
+      <View style={styles.navBarTitle}>
+        <Text style={[styles.navBarText, styles.navBarTitleText]}>
+          {route.name}
+        </Text>
+      </View>
+    );
+  },
+
+};
 
 // Top level navigator.
 // Navigator route should have:
@@ -41,19 +82,27 @@ class App extends Component {
   render(){
     return(
       <Navigator
-       initialRoute={ItemList}
-       renderScene={this.renderScene.bind(this)}
-       configureScene={ (route) => {
-         if (route.sceneConfig) {
-           return route.sceneConfig;
-         }
-         return Navigator.SceneConfigs.FloatFromRight;
-       }}
-       sceneStyle={styles.container}
+        navigationBar={
+          <Navigator.NavigationBar
+            routeMapper={NavigationBarRouteMapper}
+            style={styles.navBar}
+          />
+        }
+        initialRoute={LoginPage}
+        renderScene={this.renderScene.bind(this)}
+        configureScene={ (route) => {
+          if (route.sceneConfig) {
+            return route.sceneConfig;
+          }
+          return Navigator.SceneConfigs.FloatFromRight;
+        }}
+        sceneStyle={styles.container}
       />
     );
   }
 }
+
+var {screenHeight, screenWidth} = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   container: {
@@ -72,6 +121,36 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  navBar: {
+    backgroundColor: 'white',
+    height: 48,
+  },
+  navBarTitle: {
+    //flex: 1,
+    height: 48,
+    left: 80,
+    right: 80 + (screenWidth - 80 * 2),
+    // alignSelf: 'center',
+    paddingVertical: 9,
+  },
+  navBarText: {
+    fontSize: 16,
+    marginVertical: 10,
+  },
+  navBarTitleText: {
+    color: '#373E4D',
+    fontWeight: '500',
+    textAlign: 'center'
+  },
+  navBarLeftButton: {
+    paddingLeft: 10,
+  },
+  navBarRightButton: {
+    paddingRight: 10,
+  },
+  navBarButtonText: {
+    color: '#5890FF',
+  }
 });
 
 module.exports = App
