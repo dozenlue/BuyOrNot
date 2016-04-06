@@ -13,4 +13,3 @@ A starter project for learning react-native and redux
 #### Apple+R to the emulator window to reload.
 ### For Android, launch emulator manualy and run 'react-native run-android'.
 
-AAAAAAA
