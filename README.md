@@ -12,3 +12,5 @@ A starter project for learning react-native and redux
 ### Apple+R to launch the emulator and run. Do not close the popped command window, it serves js bundle to your App.
 #### Apple+R to the emulator window to reload.
 ### For Android, launch emulator manualy and run 'react-native run-android'.
+
+AAAAAAA
