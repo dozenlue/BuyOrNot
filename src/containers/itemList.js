@@ -15,7 +15,7 @@ const mapReduxStoreToProps = (reduxStore) => {
   // console.debug(reduxStore);
   return {
     // Why cannot use store.get here?
-    items: reduxStore.items.itemList
+    items: reduxStore.items.get('itemList')
   };
 };
 
@@ -30,7 +30,7 @@ class ItemList extends Component {
 		super(props);
 		var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		this.state = {
-			ds: ds.cloneWithRows(this.props.items)
+			ds: ds.cloneWithRows(this.props.items.toJS())
 		}
 	}
 
@@ -44,7 +44,7 @@ class ItemList extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.items !== this.props.items) {
 			this.setState({
-				ds: this.state.ds.cloneWithRows(nextProps.items)
+				ds: this.state.ds.cloneWithRows(nextProps.items.toJS())
 			})
 		}
 	}

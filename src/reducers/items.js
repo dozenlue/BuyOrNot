@@ -5,10 +5,17 @@ const {
   FETCH_ITEMS,
 } = require('../actions/items')
 
+const Immutable = require('immutable')
+
 // initial state: an empty list
-const initialState = {
+const initialState = Immutable.fromJS({
+  user: {
+    loginName: "",
+    password: "",
+    loggedIn: false
+  },
   itemList: []
-}
+})
 
 module.exports = function items(state = initialState, action) {
   console.log('reducer get called');
@@ -16,26 +23,21 @@ module.exports = function items(state = initialState, action) {
 
   switch (action.type) {
   case ADD_ITEM:
-    list = state.itemList.concat([action.itemData]).sort((a, b) => b.time - a.time)
-    // A reducer must return a completely new object
-    return {
-      itemList: list
-    }
+    // TODO: Not sure if this is correct...
+    return state.updateIn(['itemList'], list => list.push(action.itemData))
   case REMOVE_ITEM:
-    list = state.itemList.slice(0)
-    const index = list.map(i => i.id).indexOf(action.id)
-    list.splice(index, 1)
-    return {
-     itemList: list
-    }
+    // TODO: How to remove an item with Immutable...
+    return state
   case FETCH_ITEMS:
     // dummy code
     console.log('reducer called: fetchItems');
-    list = state.itemList.concat({id: '1', name: 'aaa'});
-    list.push({id: '2', name: 'bbb'})
-    return {
-      itemList: list
-    }
+    return state.updateIn(['itemList'], list => Immutable.fromJS(
+      [
+        {id: '1', name: 'aaa'},
+        {id: '2', name: 'bbb'},
+        {id: '3', name: 'ccc'}
+      ]
+    ))
   default:
     // unknown action, nothing to do
     return state
