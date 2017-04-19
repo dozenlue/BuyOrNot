@@ -1,5 +1,5 @@
-import React, {
-  Component,
+import React, {Component} from 'react';
+import {
   StyleSheet,
   Text,
   View,
@@ -25,7 +25,12 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-class LoginPage extends Component {
+class LoginScreen extends Component {
+
+  static navigationOptions = {
+    title: 'Welcome',
+  };
+
   render() {
     return (
       <View style={styles.loginBox}>
@@ -45,8 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = {
-  id: 'loginPage',
-  name: 'Login',
-  content: connect(mapReduxStoreToProps, mapDispatchToProps)(LoginPage)
-}
+module.exports = connect(mapReduxStoreToProps, mapDispatchToProps)(LoginScreen);

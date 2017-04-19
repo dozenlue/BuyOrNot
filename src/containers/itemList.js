@@ -1,5 +1,5 @@
-import React, {
-  Component,
+import React, {Component} from 'react';
+import {
   StyleSheet,
   Text,
   View,
@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-class ItemList extends Component {
+class ItemsScreen extends Component {
   constructor(props) {
 		super(props);
 		var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -77,8 +77,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = {
-  id: 'itemList',
-  name: 'Items',
-  content: connect(mapReduxStoreToProps, mapDispatchToProps)(ItemList)
-}
+module.exports = connect(mapReduxStoreToProps, mapDispatchToProps)(ItemsScreen);

@@ -1,23 +1,47 @@
-const React = require('react-native')
-const { Provider } = require('react-redux')
-const App = require('./src/containers/App')
-const configureStore = require('./src/store/configureStore')
+import React, {Component} from 'react';
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
 
-const {
-  Component,
-  AppRegistry
-} = React
+import {
+  Provider
+} from 'react-redux';
 
-const store = configureStore()
+import App from './src/containers/App';
+import configureStore from './src/store/configureStore';
 
-class BuyOrNot extends Component {
+const store = configureStore();
+
+export default class BuyOrNot extends Component {
   render() {
     return (
       <Provider store={store}>
         <App />
       </Provider>
-    )
+    );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+});
 
 AppRegistry.registerComponent('BuyOrNot', () => BuyOrNot);

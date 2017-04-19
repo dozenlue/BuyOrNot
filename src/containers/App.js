@@ -1,103 +1,24 @@
-import React, {
+import React, {Component} from 'react';
+import {
   Navigator,
-  Component,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   Dimensions
 } from 'react-native';
+import {connect} from 'react-redux';
+import { addNavigationHelpers } from 'react-navigation';
 
-import ItemList from './itemList'
-import LoginPage from './login'
-
-var NavigationBarRouteMapper = {
-
-  LeftButton: function(route, navigator, index, navState) {
-    return (
-      <TouchableOpacity
-        onPress={() => navigator.pop()}
-        style={styles.navBarLeftButton}>
-        <Text style={[styles.navBarText, styles.navBarButtonText]}>
-          Prev
-        </Text>
-      </TouchableOpacity>
-    );
-  },
-
-  RightButton: function(route, navigator, index, navState) {
-    return (
-      <TouchableOpacity
-        onPress={() => navigator.push(ItemList)}
-        style={styles.navBarRightButton}>
-        <Text style={[styles.navBarText, styles.navBarButtonText]}>
-          Next
-        </Text>
-      </TouchableOpacity>
-    );
-  },
-
-  Title: function(route, navigator, index, navState) {
-    return (
-      <View style={styles.navBarTitle}>
-        <Text style={[styles.navBarText, styles.navBarTitleText]}>
-          {route.name}
-        </Text>
-      </View>
-    );
-  },
-
-};
-
-// Top level navigator.
-// Navigator route should have:
-// - id: unique scene id
-// - name: scene's display name, to be displayed on navigation bar
-// - sceneConfig: configureation of how to put the scene on top
-// - content: the content to be render in this scene
-// - params: customized params you would like to pass to the scene
+import AppNavigator from './AppNavigator';
 
 class App extends Component {
-
-  renderScene(route, nav) {
-    if (route.content) {
-      let ContentPage = route.content
-      return <ContentPage {...route.params} navigator={nav} />
-    }
-    else {
-      // render a placeholder as default
-      return (
-        <View>
-          <Text style={styles.welcome}>
-            A placeholder page
-          </Text>
-          <Text style={styles.instructions}>
-            The scene {route.id} has no content
-          </Text>
-        </View>
-      )
-    }
-  }
-
   render(){
-    return(
-      <Navigator
-        navigationBar={
-          <Navigator.NavigationBar
-            routeMapper={NavigationBarRouteMapper}
-            style={styles.navBar}
-          />
-        }
-        initialRoute={LoginPage}
-        renderScene={this.renderScene.bind(this)}
-        configureScene={ (route) => {
-          if (route.sceneConfig) {
-            return route.sceneConfig;
-          }
-          return Navigator.SceneConfigs.FloatFromRight;
-        }}
-        sceneStyle={styles.container}
-      />
+    return (
+      <AppNavigator navigation={addNavigationHelpers({
+        dispatch: this.props.dispatch,
+        state: this.props.nav,
+      })} />
     );
   }
 }
@@ -153,4 +74,6 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = App
+module.exports = connect(state => ({
+  nav: state.nav,
+}))(App);

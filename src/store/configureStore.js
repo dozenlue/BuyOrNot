@@ -1,13 +1,32 @@
+/**
+ * ## Imports
+ *
+ * redux functions
+ */
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 
+/**
+* ## Reducer
+* The reducer contains the 4 reducers from
+* device, global, auth, profile
+*/
+import reducer from '../reducers'
 
-const { createStore, applyMiddleware } = require('redux')
-const thunk = require('redux-thunk')
-const reducer = require('../reducers')
+/**
+ * ## creatStoreWithMiddleware
+ * Like the name...
+ */
+const createStoreWithMiddleware = applyMiddleware(
+  thunk
+)(createStore)
 
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
-
-module.exports = function configureStore(initialState) {
-  const store = createStoreWithMiddleware(reducer, initialState)
-
-  return store
+/**
+ * ## configureStore
+ * @param {Object} the state with for keys:
+ * device, global, auth, profile
+ *
+ */
+export default function configureStore (initialState) {
+  return createStoreWithMiddleware(reducer, initialState)
 }
