@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
   StyleSheet,
+  Button,
   Text,
   View,
   TextInput
@@ -32,12 +33,17 @@ class LoginScreen extends Component {
   };
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.loginBox}>
         <Text>User Name:</Text>
         <TextInput />
         <Text>Password:</Text>
         <TextInput />
+        <Button
+        title="Login"
+        onPress={() => navigate('Items')}
+      />
       </View>
     )
   }
