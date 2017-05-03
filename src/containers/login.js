@@ -1,6 +1,7 @@
-import React, {
-  Component,
+import React, {Component} from 'react';
+import {
   StyleSheet,
+  Button,
   Text,
   View,
   TextInput
@@ -25,14 +26,24 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-class LoginPage extends Component {
+class LoginScreen extends Component {
+
+  static navigationOptions = {
+    title: 'Welcome',
+  };
+
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.loginBox}>
         <Text>User Name:</Text>
         <TextInput />
         <Text>Password:</Text>
         <TextInput />
+        <Button
+        title="Login"
+        onPress={() => navigate('Items')}
+      />
       </View>
     )
   }
@@ -45,8 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = {
-  id: 'loginPage',
-  name: 'Login',
-  content: connect(mapReduxStoreToProps, mapDispatchToProps)(LoginPage)
-}
+module.exports = connect(mapReduxStoreToProps, mapDispatchToProps)(LoginScreen);
