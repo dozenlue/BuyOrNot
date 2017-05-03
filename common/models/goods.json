@@ -1,0 +1,58 @@
+{
+  "name": "Goods",
+  "plural": "goods",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "style": {
+      "type": [
+        "string"
+      ],
+      "required": true,
+      "default": []
+    },
+    "price": {
+      "type": "number",
+      "required": true
+    },
+    "source": {
+      "type": "object",
+      "required": true
+    },
+    "category": {
+      "type": "string",
+      "required": true
+    },
+    "size": {
+      "type": "string",
+      "required": true
+    },
+    "color": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "string",
+      "required": true
+    },
+    "material": {
+      "type": "string",
+      "required": true
+    },
+    "pictures": {
+      "type": [
+        "object"
+      ]
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
