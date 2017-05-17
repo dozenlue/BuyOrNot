@@ -22,7 +22,9 @@ const mapReduxStoreToProps = (reduxStore) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: bindActionCreators(loginActions.login, dispatch)
+    actions: {
+      login: bindActionCreators(loginActions.login, dispatch)
+    }
   }
 };
 
@@ -34,6 +36,8 @@ class LoginScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const loginAction = this.props.actions.login;
+
     return (
       <View style={styles.loginBox}>
         <Text>User Name:</Text>
@@ -42,7 +46,7 @@ class LoginScreen extends Component {
         <TextInput />
         <Button
         title="Login"
-        onPress={() => navigate('Items')}
+        onPress={() => /*navigate('Items')*/loginAction("susan", "adams")}
       />
       </View>
     )

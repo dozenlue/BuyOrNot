@@ -17,8 +17,8 @@ const initialState = Immutable.fromJS({
   itemList: []
 })
 
-module.exports = function items(state = initialState, action) {
-  console.log('reducer get called');
+module.exports = function itemsReducer(state = initialState, action) {
+  console.log('items reducer get called');
   let list
 
   switch (action.type) {
